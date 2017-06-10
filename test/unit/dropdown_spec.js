@@ -399,7 +399,7 @@ describe('Dropdown', function () {
             createSearchResult(),
             createSearchResult(),
           ], { top: 0, left: 0, lineHeight: 0 });
-          assert(!dropdown.items[0].active);
+          assert(dropdown.items[0].active);
           assert(!dropdown.items[1].active);
           assert(!dropdown.items[2].active);
 
@@ -460,22 +460,22 @@ describe('Dropdown', function () {
             createSearchResult(),
             createSearchResult(),
           ], { top: 0, left: 0, lineHeight: 0 });
-          assert(!dropdown.items[0].active);
+          assert(dropdown.items[0].active);
           assert(!dropdown.items[1].active);
           assert(!dropdown.items[2].active);
 
           var spy = this.sinon.spy();
           dropdown.down({ preventDefault: spy });
-          assert(dropdown.items[0].active);
-          assert(!dropdown.items[1].active);
+          assert(!dropdown.items[0].active);
+          assert(dropdown.items[1].active);
           assert(!dropdown.items[2].active);
           assert(spy.calledOnce);
 
           spy.reset();
           dropdown.down({ preventDefault: spy });
           assert(!dropdown.items[0].active);
-          assert(dropdown.items[1].active);
-          assert(!dropdown.items[2].active);
+          assert(!dropdown.items[1].active);
+          assert(dropdown.items[2].active);
           assert(spy.calledOnce);
         });
       });
@@ -520,19 +520,21 @@ describe('Dropdown', function () {
 
     context('without active item', function () {
       it('should return undefined', function () {
+        dropdown.items[0].deactivate();
         assert(isUndefined(subject()));
       });
     });
 
     context('with active item', function () {
-      var activeItem;
-
-      beforeEach(function () {
-        activeItem = dropdown.items[1].activate();
+      it('activates the first item by default', function () {
+        assert(dropdown.items[0].active);
+        assert.strictEqual(dropdown.items[0], subject());
       });
 
       it('should return the active item', function () {
-        assert.strictEqual(subject(), activeItem);
+        dropdown.items[0].deactivate();
+        dropdown.items[1].activate();
+        assert.strictEqual(subject(), dropdown.items[1]);
       });
     });
   });

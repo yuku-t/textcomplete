@@ -85,9 +85,9 @@ describe('Integration test', function () {
     keyboard.dispatchEventsForAction('enter', textareaEl);
     expectDropdownIsHidden();
 
-    assert.equal(textareaEl.value, 'Hi, @alice ');
-    assert.equal(textareaEl.selectionStart, 11);
-    assert.equal(textareaEl.selectionEnd, 11);
+    assert.equal(textareaEl.value, 'Hi, @amanda ');
+    assert.equal(textareaEl.selectionStart, 12);
+    assert.equal(textareaEl.selectionEnd, 12);
   });
 
   xit('should work with touch event', function () {
