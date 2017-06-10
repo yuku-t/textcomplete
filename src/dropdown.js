@@ -198,6 +198,9 @@ export default class Dropdown extends EventEmitter {
         .renderEdge(rawResults, 'footer')
         .setOffset(cursorOffset)
         .show();
+    if (dropdownItems.length > 0) {
+      dropdownItems[0].activate();
+    }
     this.emit('rendered', createCustomEvent('rendered'));
     return this;
   }
