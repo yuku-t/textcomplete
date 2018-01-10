@@ -16,6 +16,7 @@ export type DropdownOptions = {
   maxCount?: number,
   placement?: string,
   rotate?: boolean,
+  reverse?: boolean,
   style?: { [string]: string },
   item?: DropdownItemOptions,
 }
@@ -34,6 +35,7 @@ export default class Dropdown extends EventEmitter {
   header: $PropertyType<DropdownOptions, "header">
   maxCount: $PropertyType<DropdownOptions, "maxCount">
   rotate: $PropertyType<DropdownOptions, "rotate">
+  reverse: $PropertyType<DropdownOptions, "reverse">
   placement: $PropertyType<DropdownOptions, "placement">
   itemOptions: DropdownItemOptions
   _el: ?HTMLUListElement
@@ -61,6 +63,7 @@ export default class Dropdown extends EventEmitter {
     this.maxCount = options.maxCount || 10
     this.el.className = options.className || DEFAULT_CLASS_NAME
     this.rotate = options.hasOwnProperty("rotate") ? options.rotate : true
+    this.reverse = options.hasOwnProperty("reverse") ? options.reverse : false
     this.placement = options.placement
     this.itemOptions = options.item || {}
     const style = options.style
@@ -104,6 +107,7 @@ export default class Dropdown extends EventEmitter {
     const rawResults = searchResults.map(searchResult => searchResult.data)
     const dropdownItems = searchResults
       .slice(0, this.maxCount || searchResults.length)
+      .sort(()=>this.reverse?1:0)
       .map(searchResult => new DropdownItem(searchResult, this.itemOptions))
     this.clear()
       .setStrategyId(searchResults[0])
