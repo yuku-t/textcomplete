@@ -3,7 +3,7 @@
 import update from "undate/lib/update"
 
 import Editor from "./editor"
-import { calculateElementOffset, getLineHeightPx } from "./utils"
+import { calculateElementOffset, getLineHeightPx, createCustomEvent } from "./utils"
 import SearchResult from "./search_result"
 
 const getCaretCoordinates = require("textarea-caret")
@@ -51,7 +51,8 @@ export default class Textarea extends Editor {
       this.el.focus() // Clicking a dropdown item removes focus from the element.
       if (Array.isArray(replace)) {
         update(this.el, replace[0], replace[1])
-        this.el.dispatchEvent(new Event("input"))
+        const inputEvent = createCustomEvent("input")
+        this.el.dispatchEvent(inputEvent)
       }
     }
   }
